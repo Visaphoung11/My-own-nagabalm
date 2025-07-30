@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from "react";
@@ -24,88 +25,57 @@ const DiscoverSolutionSection = () => {
         ))}
       </h2>
       <div className="flex flex-col md:flex-row gap-8 sm:gap-12 md:gap-16 w-full max-w-7xl justify-center items-stretch">
-        {/* Active Lifestyles Card */}
-        <div className="bg-[#F9461C] card p-4 sm:p-6 text-white w-full max-w-2xl flex flex-row items-center relative h-64 sm:h-56 overflow-visible rounded-xl">
-          <div className="flex-1 pr-24 sm:pr-32 pl-2 sm:pl-4">
-            <h3 className="font-extrabold text-2xl sm:text-3xl mb-2 sm:mb-3 leading-tight">
-              {t('activeLifestyles.title')}<br />
-            </h3>
-            <p className="text-lg sm:text-xl mb-2 sm:mb-3 leading-snug">
-              {t('activeLifestyles.subtitle').split('\\n').map((line, index) => (
-                <React.Fragment key={index}>
-                  {line}
-                  {index === 0 && <br />}
-                </React.Fragment>
-              ))}
-            </p>
-            <p className="text-sm sm:text-base mb-3 sm:mb-4 opacity-90 leading-relaxed">
-              {t('activeLifestyles.description').split('\\n').map((line, index) => (
-                <React.Fragment key={index}>
-                  {line}
-                  {index === 0 && <br />}
-                </React.Fragment>
-              ))}
-            </p>
-            <div className="absolute bottom-4 sm:bottom-6 right-6 sm:right-10 z-10">
-              <button 
-                onClick={() => handleCategoryClick('active')}
-                className="bg-[#FFE6B0] text-[#F9461C] font-bold py-2 sm:py-3 px-4 sm:px-8 rounded-full text-base sm:text-lg flex items-center gap-2 hover:bg-[#ffd580] transition-colors"
-              >
-                {t('activeLifestyles.button')}
-              </button>
-            </div>
-          </div>
-          <div className="absolute right-[-10px] bottom-0 top-auto">
-            <Image 
-              src="/images/History of CoCo Khmer 3/ActiveLifeStyle@4x.png"
-              alt="Active Lifestyle"
-              width={280}
-              height={280}
-              className="object-contain sm:w-[300px] sm:h-[300px]"
-            />
-          </div>
-        </div>
-        {/* Everyday Relief Card */}
-        <div className="bg-[#00B388] card p-4 sm:p-6 text-white w-full max-w-2xl flex flex-row items-center relative h-64 sm:h-56 overflow-visible rounded-xl">
-          <div className="flex-1 pr-24 sm:pr-32 pl-2 sm:pl-4">
-            <h3 className="font-extrabold text-2xl sm:text-3xl mb-2 sm:mb-3 leading-tight">
-              {t('everydayRelief.title')}<br />
-            </h3>
-            <p className="text-lg sm:text-xl mb-2 sm:mb-3 leading-snug">
-              {t('everydayRelief.subtitle').split('\\n').map((line, index) => (
-                <React.Fragment key={index}>
-                  {line}
-                  {index === 0 && <br />}
-                </React.Fragment>
-              ))}
-            </p>
-            <p className="text-sm sm:text-base mb-3 sm:mb-4 opacity-90 leading-relaxed">
-              {t('everydayRelief.description').split('\\n').map((line, index) => (
-                <React.Fragment key={index}>
-                  {line}
-                  {index === 0 && <br />}
-                </React.Fragment>
-              ))}
-            </p>
-            <div className="absolute bottom-4 sm:bottom-6 right-6 sm:right-10 z-10">
-              <button 
-                onClick={() => handleCategoryClick('everyday')}
-                className="bg-[#CFE8EE] text-[#F9461C] font-bold py-2 sm:py-3 px-4 sm:px-8 rounded-full text-base sm:text-lg flex items-center gap-2 hover:bg-[#ffd580] transition-colors"
-              >
-                {t('everydayRelief.button')}
-              </button>
-            </div>
-          </div>
-          <div className="absolute right-[-10px] bottom-0 top-auto">
-            <Image 
-              src="/images/History of CoCo Khmer 3/DailyLifeStyle@4x.png"
-              alt="Daily Lifestyle"
-              width={280}
-              height={280}
-              className="object-contain sm:w-[300px] sm:h-[300px]"
-            />
-          </div>
-        </div>
+        <div className="flex flex-col lg:flex-row gap-6 w-full px-4 sm:px-6 max-w-6xl mx-auto">
+  {/* Card 1: Active Lifestyles */}
+  <div className="bg-[#00C3E3] text-white p-6 rounded-xl flex flex-col justify-between h-full">
+    <div>
+      <h3 className="text-xl sm:text-2xl font-extrabold mb-2">
+        {t('activeLifestyles.title')}
+      </h3>
+      <p className="text-sm sm:text-base opacity-90 mb-4">
+        {t('activeLifestyles.description')
+          .split('\\n')
+          .map((line, index) => (
+            <React.Fragment key={index}>
+              {line}
+              <br />
+            </React.Fragment>
+          ))}
+      </p>
+    </div>
+    <button
+      onClick={() => handleCategoryClick('active')}
+      className="bg-[#FFE6B0] text-[#F9461C] font-bold py-2 px-6 rounded-full text-sm sm:text-base w-fit self-start hover:bg-[#ffd580] transition-colors"
+    >
+      {t('activeLifestyles.button')} →
+    </button>
+  </div>
+
+  {/* Card 2: Everyday Relief */}
+  <div className="bg-[#00B888] text-white p-6 rounded-xl flex flex-col justify-between h-full">
+    <div>
+      <h3 className="text-xl sm:text-2xl font-extrabold mb-2">
+        {t('everydayRelief.title')}
+      </h3>
+      <p className="text-sm sm:text-base opacity-90 mb-4">
+        {t('everydayRelief.description')
+          .split('\\n')
+          .map((line, index) => (
+            <React.Fragment key={index}>
+              {line}
+              <br />
+            </React.Fragment>
+          ))}
+      </p>
+    </div>
+    <button
+      onClick={() => handleCategoryClick('relief')}
+      className="bg-[#FFE6B0] text-[#F9461C] font-bold py-2 px-6 rounded-full text-sm sm:text-base w-fit self-start hover:bg-[#ffd580] transition-colors"
+    >
+      {t('everydayRelief.button')} →
+    </button>
+  </div>
+</div>
       </div>
     </section>
   );
