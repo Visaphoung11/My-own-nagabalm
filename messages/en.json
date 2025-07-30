@@ -436,7 +436,7 @@
     },
     "form": {
       "title": "SEND US A MESSAGE",
-      "subtitle": "We'd love to hear from you. Send us your questions or feedback.",
+      "subtitle": "Reach out to us through any of these channels",
       "fields": {
         "fullName": "Full Name",
         "email": "Email",
@@ -448,10 +448,10 @@
     },
     "info": {
       "title": "HOW TO REACH US",
-      "subtitle": "Get in touch with us through any of these channels",
+      "subtitle": "Reach out to us through any of these channels",
       "address": {
         "title": "ADDRESS",
-        "text": "Coco Khmer Co., Ltd.\n#1529, NR. 2, Chakangre Krom\nKhan Mean Chey, Phnom Penh\nCambodia"
+        "text": "Naga Blam@ combines ancient Khmer healing tradition with modern innovation. Our premium"
       },
       "email": {
         "title": "EMAIL"
@@ -467,7 +467,7 @@
       "followUs": "FOLLOW US"
     },
     "visit": {
-      "title": "VISIT US",
+      "title": "ADDRESS",
       "address": "Coco Khmer Co., Ltd.\n#1529, NR. 2, Chakangre Krom\nKhan Mean Chey, Phnom Penh, Cambodia"
     },
     "discoverSolution": {
@@ -475,7 +475,7 @@
       "activeLifestyles": {
         "title": "FOR ACTIVE LIFESTYLES",
         "subtitle": "Soothe tension. Ease the day.\nFeel good again.",
-        "description": "From desk strain to daily discomfort,\nchoose relief made for life's routines.",
+        "description": "From desk strain to daily discomfort,\nchoose relief made for life's routines.MOUNTAIN VIEW, Calif., October 9, 2006 - Google Inc. (NASDAQ: GOOG) announced today that it has agreed to acquire YouTube, the consumer media company for people to watch and share original videos through a Web experience, for $1.65 billion in a stock-for-stock transaction.",
         "button": "VIEW PRODUCTS"
       },
       "everydayRelief": {

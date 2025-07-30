@@ -8,7 +8,7 @@ const ContactHeroSection = () => {
   const t = useTranslations('contact.hero');
 
   return (
-    <section className="w-full bg-[#FFE6B0] flex flex-col items-center justify-center py-20 px-4 relative overflow-hidden">
+    <section className="w-full bg-[#FFE2A9] flex flex-col items-center justify-center py-20 px-4 relative overflow-hidden">
       {/* Cloud decorations */}
       {/* Top-left cloud */}
       <div className="absolute top-0 left-0 w-40 md:w-72 h-[80px] md:h-[120px] z-10">
