@@ -33,14 +33,16 @@ const ContactHeroSection = () => {
       </div>
 
       <div className="pt-32 z-10">
-        <h1 className="text-[#F9461C] text-4xl sm:text-5xl font-extrabold text-center mb-2">
-          {t('title').split('\\n').map((line, index) => (
-            <React.Fragment key={index}>
-              {line}
-              {index === 0 && <br />}
-            </React.Fragment>
-          ))}
-        </h1>
+   <h1 
+  className="text-[#F9461C] text-4xl sm:text-5xl font-extrabold leading-tight text-center mb-2 py-2 px-4"
+>
+  {t('title').split('\n').map((line, index) => (
+    <React.Fragment key={index}>
+      {line}
+      {index === 0 && <br />}
+    </React.Fragment>
+  ))}
+</h1>
       </div>
     </section>
   );
