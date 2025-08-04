@@ -165,17 +165,21 @@ export async function DELETE(
 ) {
   try {
     const id = params.id;
+    console.log('DELETE request received for ID:', id);
     
-    // Check if product exists
+    // Check if product exists and get its data
     const existingProduct = await prisma.product.findUnique({
       where: { id: id }
     });
 
+    console.log('Existing product found:', existingProduct ? 'Yes' : 'No');
+
     if (!existingProduct) {
       return NextResponse.json(
-        { 
+        {
           success: false,
-          error: "Product not found" 
+          error: "Product not found",
+          searchedId: id
         },
         { status: 404 }
       );
@@ -188,9 +192,12 @@ export async function DELETE(
       }
     });
 
-    return NextResponse.json({ 
+    console.log('Product deleted successfully');
+
+    return NextResponse.json({
       success: true,
-      message: `Product ${id} deleted successfully`
+      message: `Product deleted successfully`,
+      deletedProduct: existingProduct
     });
   } catch (error) {
     console.error('Error deleting product:', error);
@@ -198,7 +205,7 @@ export async function DELETE(
     // Check if it's a database connection error
     if (error instanceof Error && error.message.includes('authentication failed')) {
       return NextResponse.json(
-        { 
+        {
           success: false,
           error: "Database authentication failed. Please check your MongoDB credentials."
         },
@@ -207,7 +214,7 @@ export async function DELETE(
     }
     
     return NextResponse.json(
-      { 
+      {
         success: false,
         error: "Failed to delete product",
         details: error instanceof Error ? error.message : "Unknown error"
