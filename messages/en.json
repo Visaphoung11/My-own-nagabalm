@@ -1,7 +1,7 @@
 {
   "navigation": {
     "home": "HOME",
-    "products": "PRODUCTS", 
+    "products": "PRODUCTS",
     "about": "ABOUT",
     "faq": "FAQ",
     "contact": "CONTACT",
@@ -58,16 +58,17 @@
   },
   "whyNagaBalm": {
     "title": "WHY NAGA BALM",
-    "getToKnowUs": "GET TO KNOW US",
+    "p": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diamnonummy nibh euismod",
+    "about": "ABOUT",
     "cards": {
       "petroleumFree": {
-        "title": "Petroleum-Free, Safe, and Effective",
+        "title": "PETROLEUM-FREE, SAFE,AND EFECTIVE",
         "subtitle": "Quality Without Compromise",
-        "description": "Free from petrochemicals, harsh chemicals and filler additives, Naga Balm provides effective and safe pain relief. No compromise."
+        "description": "Our products are formulated to deliver relief without  Free from petrochemicals, harsh chemicals and filler additives. Naga Balm provides effective and safe pain relief. Every ingredient matters."
       },
       "wideRange": {
         "title": "Wide Product Range",
-        "subtitle": "Versatile Solutions", 
+        "subtitle": "Versatile Solutions",
         "description": "Naga Balm offers options for athletes, professionals, seniors, family, and everyday users - different formats and use cases, same effectiveness."
       },
       "handcrafted": {
@@ -86,7 +87,7 @@
     "values": "Our Values",
     "tradition": "Tradition",
     "traditionText": "Honoring ancient Khmer healing practices",
-    "quality": "Quality", 
+    "quality": "Quality",
     "qualityText": "Premium ingredients, carefully sourced",
     "innovation": "Innovation",
     "innovationText": "Modern techniques, traditional wisdom",
@@ -170,7 +171,7 @@
     "subtitle": "Traditional Healing, Modern Solutions",
     "heroTitle": "DISCOVER THE PERFECT\nSOLUTION FOR YOUR NEEDS.",
     "activeLifestyles": {
-      "title": "FOR ACTIVE LIFESTYLES",
+      "title": "FOR ACTIVE LIFE STYLES",
       "subtitle": "Push harder. Recover faster.\nStay in motion.",
       "description": "Whether you're an athlete or just\n always on the move find relief that keeps up.",
       "viewProducts": "VIEW PRODUCTS"
@@ -212,7 +213,7 @@
       },
       "filters": {
         "allProducts": "ALL PRODUCTS",
-        "activeLifestyle": "ACTIVE LIFESTYLE", 
+        "activeLifestyle": "ACTIVE LIFESTYLE",
         "everyday": "EVERYDAY"
       },
       "results": {
@@ -246,7 +247,7 @@
           "weight": "20g"
         },
         "nagaBalmFire": {
-          "name": "NAGA BALM FIRE", 
+          "name": "NAGA BALM FIRE",
           "description": "NATURALLY FIERY. Delivers deeper heat for deeper relief of muscle aches and fatigues, pulled muscles, stiff and chronic joint or nerve pain. Smooth but long-lasting!",
           "weight": "6g/20g"
         },
@@ -300,7 +301,7 @@
       "benefits": "• Deep heat therapy\n• Muscle relaxation\n• Joint pain relief"
     },
     "iceBalm": {
-      "name": "Ice Balm", 
+      "name": "Ice Balm",
       "description": "Cooling comfort for inflammation and swelling",
       "benefits": "• Anti-inflammatory\n• Cooling sensation\n• Rapid relief"
     },
@@ -335,15 +336,13 @@
     "title": "DISCOVER THE PERFECT\nSOLUTION FOR YOUR NEEDS.",
     "exploreProducts": "EXPLORE PRODUCTS",
     "activeLifestyles": {
-      "title": "FOR ACTIVE LIFESTYLES",
-      "subtitle": "Push harder. Recover faster.\nStay in motion.",
-      "description": "Whether you're an athlete or just\nalways on the move find relief that keeps up.",
+      "title": "FOR THE ACTIVE LIFESTYLES",
+      "subtitle": "Perform, recover, and stay in motion. Whether you're an athlete, fitness enthusiast,or someone who loves staying active",
       "viewProducts": "VIEW PRODUCTS"
     },
     "everydayRelief": {
-      "title": "FOR EVERYDAY RELIEF",
-      "subtitle": "Soothe tension. Ease the day.\nFeel good again.",
-      "description": "From desk strain to daily discomfort,\nchoose relief made for life's routines.",
+      "title": "FOR THE EVERYDAY  RELIEF",
+      "subtitle": "Perform, recover, and stay in motion.Whether you're an athlete, fitness enthusiast,or someone who loves staying active",
       "viewProducts": "VIEW PRODUCTS"
     }
   },
@@ -500,4 +499,4 @@
       }
     }
   }
-} 
+}
