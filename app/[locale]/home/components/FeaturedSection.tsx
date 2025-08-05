@@ -15,28 +15,36 @@ const FeaturedSection = () => {
   const featuredProducts = [
     {
       key: 'nagabalmGo',
+      name: "Naga Balm Go",
+      label: "Ointment",
       img: "/images/Images for NB/Naga-Balm-Go.jpg",
       bgColor: "bg-[#E8F5F0]",
-      badgeColors: "bg-[#B2E3D7] text-[#009688]",
     },
     {
       key: 'inhalerRollOn',
+      name: "Inhaler & Roll-On",
+      label: "Inhaler Roll-On",
       img: "/images/Images for NB/Inhaler&RollOn.jpg",
       bgColor: "bg-[#FFE6B0]",
-      badgeColors: "bg-[#E8F5F0] text-[#009688]",
     },
     {
       key: 'mosquitoRepellent',
+      name: "Picaridin Mosquito Repellent",
+      label: "Spray",
       img: "/images/Images for NB/NagaBalm-MosquitoRepellent.jpg",
       bgColor: "bg-[#FFF8E1]",
     },
     {
       key: 'nagabalmFire',
+      name: "Naga Balm Fire",
+      label: "Ointment",
       img: "/images/Images for NB/Naga-Balm-Fire.jpg",
       bgColor: "bg-[#FFE0D6]",
     },
     {
       key: 'extremeLiniment',
+      name: "Extreme Liniment Oil",
+      label: "Oil",
       img: "/images/Images for NB/Leniment-Oil-Extreme.jpg",
       bgColor: "bg-[#F9461C]",
       textColor: "text-white",
@@ -44,7 +52,6 @@ const FeaturedSection = () => {
     },
   ];
 
-  // Check scroll position and update button states
   const checkScrollButtons = () => {
     if (containerRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
@@ -53,7 +60,6 @@ const FeaturedSection = () => {
     }
   };
 
-  // Scroll functions
   const scrollLeft = () => {
     if (containerRef.current) {
       const cardWidth = containerRef.current.children[0]?.clientWidth || 300;
@@ -68,7 +74,6 @@ const FeaturedSection = () => {
     }
   };
 
-  // Check scroll on mount and scroll events
   useEffect(() => {
     checkScrollButtons();
     const container = containerRef.current;
@@ -92,7 +97,7 @@ const FeaturedSection = () => {
           </h2>
           <Link 
             href={`/${locale}/products`}
-            className={`bg-[#F9461C] text-white font-bold py-2.5 sm:py-3 px-6 sm:px-8 rounded-full text-sm sm:text-base transition-all duration-300 hover:bg-[#d13a17] flex items-center gap-2 group ${locale === 'km' ? 'font-hanuman' : ''}`}
+            className={`bg-[#F9461C] text-white font-bold py-2.5 sm:py-3 px-6 sm:px-8 rounded-full text-sm sm:text-base transition-all duration-300 hover:bg-[#d13a17] flex items-center gap-2 ${locale === 'km' ? 'font-hanuman' : ''}`}
           >
             {t('viewAll')}
             <span className="text-xl transition-transform duration-300 group-hover:translate-x-1">→</span>
@@ -130,10 +135,7 @@ const FeaturedSection = () => {
           <div 
             ref={containerRef}
             className="flex gap-4 sm:gap-6 lg:gap-8 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4"
-            style={{
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
-            }}
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             onScroll={checkScrollButtons}
           >
             {featuredProducts.map((product, idx) => (
@@ -144,16 +146,16 @@ const FeaturedSection = () => {
                   <div className="absolute inset-0 w-full h-full rounded-[10px] overflow-hidden">
                     <Image
                       src={product.img}
-                      alt={t(`products.${product.key}.name`)}
+                      alt={product.name}
                       fill
                       className="object-contain"
                       sizes="(max-width: 640px) 256px, (max-width: 1024px) 288px, 320px"
                     />
                   </div>
-                  {/* Badge */}
-                  {t.has(`products.${product.key}.label`) && (
-                    <span className={`absolute top-3 sm:top-4 left-3 sm:left-4 px-2 sm:px-3 py-1 rounded-full text-xs font-bold z-10 ${product.badgeColors} ${locale === 'km' ? 'font-hanuman' : ''}`}>
-                      {t(`products.${product.key}.label`)}
+                  {/* Product Label */}
+                  {product.label && (
+                    <span className="absolute top-3 sm:top-4 left-3 sm:left-4 px-2 sm:px-3 py-1 rounded-full text-xs font-bold z-10 bg-white text-[#F9461C] border border-[#F9461C]">
+                      {product.label}
                     </span>
                   )}
                 </div>
@@ -161,7 +163,7 @@ const FeaturedSection = () => {
                 <div className={`flex flex-col flex-grow text-[#F9461C]`}>
                   <div className="flex justify-between items-start mb-2">
                     <h3 className={`font-bold text-lg sm:text-xl ${locale === 'km' ? 'font-hanuman' : ''}`}>
-                      {t(`products.${product.key}.name`)}
+                      {product.name}
                     </h3>
                     <span className={`text-xs sm:text-sm font-bold opacity-75 ${locale === 'km' ? 'font-hanuman' : ''}`}>
                       {t(`products.${product.key}.weight`)}
@@ -170,7 +172,6 @@ const FeaturedSection = () => {
                   <p className={`text-sm text-black mb-3 sm:mb-4 min-h-[40px] sm:min-h-[48px] ${locale === 'km' ? 'font-hanuman' : ''}`}>
                     {t(`products.${product.key}.description`)}
                   </p>
-                  {/* Learn More Button */}
                   <Link 
                     href={`/${locale}/products`}
                     className={`mt-auto w-full py-2.5 sm:py-3 px-6 sm:px-8 rounded-full font-bold text-sm transition-colors duration-300 border border-current hover:bg-[#F9461C] hover:text-white text-center ${locale === 'km' ? 'font-hanuman' : ''}`}

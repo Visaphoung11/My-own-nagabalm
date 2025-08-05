@@ -1,166 +1,106 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
 
 const DiscoverSolutionSection = () => {
   const t = useTranslations("discoverSolution");
   const locale = useLocale();
 
+  const buttonClass =
+    "bg-[#FF4500] text-white font-bold py-3 px-8 rounded-full text-sm flex items-center gap-2 hover:bg-[#ff5722] transition-colors";
+  const fontClass = locale === "km" ? "font-hanuman" : "";
+
   return (
-    <section
-      className="w-full bg-[#F5F5F5] py-12 sm:py-16 lg:py-20 flex flex-col items-center relative overflow-hidden"
-      style={{
-        backgroundImage: "url('/images/about-grid/Mainposter.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <div className="w-full flex flex-col items-center">
-        <div className="w-full max-w-7xl flex flex-col lg:flex-row items-start justify-between px-4 sm:px-6 lg:px-8 gap-8 sm:gap-12">
-          <div className="flex-1 flex flex-col gap-6 sm:gap-8">
-            <h2
-              className={`text-[#FF4500] text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight text-center lg:text-left ${
-                locale === "km" ? "font-hanuman" : ""
-              }`}
-            >
+    <section className="w-full bg-[#F5F5F5] md:bg-[url('/images/about-grid/Mainposter.png')] md:bg-cover md:bg-center md:bg-no-repeat py-12 sm:py-16 lg:py-20 flex flex-col items-center relative overflow-hidden">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Flex container for desktop */}
+        <div className="flex flex-col lg:flex-row items-start justify-between gap-8 sm:gap-12">
+          {/* Left Content */}
+          <div className="flex-1 flex flex-col gap-8 sm:gap-12 lg:gap-16">
+            {/* Title */}
+            <h2 className={`text-[#FF4500] text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight  lg:text-left ${fontClass}`}>
               {locale === "en" ? (
                 <>
-                  DISCOVER THE PERFECT
+                  DISCOVER THE <br /> PERFECT
                   <br />
-                  SOLUTION FOR YOUR NEEDS.
+                  SOLUTION FOR <br />YOUR NEEDS.
                 </>
               ) : (
                 t("title")
               )}
             </h2>
-            <div className="flex flex-col gap-8 sm:gap-12 lg:gap-10">
-              {/* Active Lifestyles Card */}
-              <div className="bg-[#00B4D8] card p-4 sm:p-6 text-white w-full max-w-2xl flex flex-col sm:flex-row items-center relative min-h-[280px] sm:h-56 overflow-visible rounded-xl">
-                <div className="flex-1 pr-32 pl-4">
-                  <h3
-                    className={`font-extrabold text-3xl mb-3 ${
-                      locale === "km" ? "font-hanuman" : ""
-                    }`}
-                  >
+
+            {/* Cards */}
+            <div className="flex flex-col gap-8 sm:gap-12 lg:gap-16">
+              {/* Card 1: Active Lifestyles */}
+              <div className="bg-[#00B4D8] text-white w-full max-w-2xl flex flex-col min-h-[280px] sm:h-56 rounded-xl p-4 sm:p-6">
+                <div className="flex-1 pr-4 pl-4 flex flex-col h-full">
+                  <h3 className={`font-extrabold text-2xl sm:text-3xl mb-3 ${fontClass}`}>
                     {t("activeLifestyles.title")}
                   </h3>
-                  <p
-                    className={`text-xl mb-3 ${
-                      locale === "km" ? "font-hanuman" : ""
-                    }`}
-                  >
+                  <p className={`text-base mb-4 leading-relaxed ${fontClass}`}>
                     {locale === "en" ? (
                       <>
-                        Push harder. Recover faster.
+                        Perform, recover, and stay in motion.
                         <br />
-                        Stay in motion.
+                        Whether you're an athlete, fitness enthusiast, or someone who loves staying active.
                       </>
                     ) : (
                       t("activeLifestyles.subtitle")
                     )}
                   </p>
-                  <p
-                    className={`text-base mb-4 opacity-90 ${
-                      locale === "km" ? "font-hanuman" : ""
-                    }`}
-                  >
-                    {locale === "en" ? (
-                      <>
-                        Whether you're an athlete or just
-                        <br /> always on the move find relief that keeps up.
-                      </>
-                    ) : (
-                      t("activeLifestyles.description")
-                    )}
-                  </p>
-                  <div className="absolute bottom-6 right-10 z-10">
+                  <div className="mt-auto">
                     <Link href={`/${locale}/products`}>
-                      <button
-                        className={`bg-[#FF4500] text-white font-bold py-3 px-8 rounded-full text-sm flex items-center gap-2 hover:bg-[#ff5722] transition-colors ${
-                          locale === "km" ? "font-hanuman" : ""
-                        }`}
-                      >
-                        {t("exploreProducts")}
-                        <span className="text-xl">→</span>
+                      <button className={`${buttonClass} ${fontClass}`}>
+                        {t("exploreProducts")} <span className="text-xl">→</span>
                       </button>
                     </Link>
                   </div>
                 </div>
-                {/* <div className="absolute right-[-10px] bottom-0 top-auto">
-                  <Image 
-                    src="/images/History of CoCo Khmer 3/ActiveLifeStyle@4x.png"
-                    alt="Active Lifestyle"
-                    width={300}
-                    height={300}
-                    className="object-contain"
-                  />
-                </div> */}
               </div>
 
-              {/* Everyday Relief Card */}
-              <div className="bg-[#00A67E] card p-4 sm:p-6 text-white w-full max-w-2xl flex flex-col sm:flex-row items-center relative min-h-[280px] sm:h-56 overflow-visible rounded-xl">
-                <div className="flex-1 pr-32 pl-4">
-                  <h3
-                    className={`font-extrabold text-3xl mb-3 ${
-                      locale === "km" ? "font-hanuman" : ""
-                    }`}
-                  >
+              {/* Card 2: Everyday Relief */}
+              <div className="bg-[#00A67E] text-white w-full max-w-2xl flex flex-col min-h-[280px] sm:h-56 rounded-xl p-4 sm:p-6">
+                <div className="flex-1 pr-4 pl-4 flex flex-col h-full">
+                  <h3 className={`font-extrabold text-2xl sm:text-3xl mb-3 ${fontClass}`}>
                     {t("everydayRelief.title")}
                   </h3>
-                  <p
-                    className={`text-xl mb-3 ${
-                      locale === "km" ? "font-hanuman" : ""
-                    }`}
-                  >
+                  <p className={`text-base mb-4 leading-relaxed ${fontClass}`}>
                     {locale === "en" ? (
                       <>
-                        Soothe tension. Ease the day.
-                        <br /> Feel good again.
+                        Perform, recover, and stay in motion.
+                        <br />
+                        Whether you're managing daily discomfort or supporting long-term wellness.
                       </>
                     ) : (
                       t("everydayRelief.subtitle")
                     )}
                   </p>
-                  <p
-                    className={`text-base mb-4 opacity-90 ${
-                      locale === "km" ? "font-hanuman" : ""
-                    }`}
-                  >
-                    {locale === "en" ? (
-                      <>
-                        From desk strain to daily discomfort,
-                        <br /> choose relief made for life's routines.
-                      </>
-                    ) : (
-                      t("everydayRelief.description")
-                    )}
-                  </p>
-                  <div className="absolute bottom-6 right-10 z-10">
+                  <div className="mt-auto">
                     <Link href={`/${locale}/products`}>
-                      <button
-                        className={`bg-[#FF4500] text-white font-bold py-3 px-8 rounded-full text-sm flex items-center gap-2 hover:bg-[#ff5722] transition-colors ${
-                          locale === "km" ? "font-hanuman" : ""
-                        }`}
-                      >
-                        {t("exploreProducts")}
-                        <span className="text-xl">→</span>
+                      <button className={`${buttonClass} ${fontClass}`}>
+                        {t("exploreProducts")} <span className="text-xl">→</span>
                       </button>
                     </Link>
                   </div>
                 </div>
-                {/* <div className="absolute right-[-10px] bottom-0 top-auto">
-                  <Image
-                    src="/images/History of CoCo Khmer 3/DailyLifeStyle@4x.png"
-                    alt="Daily Lifestyle"
-                    width={300}
-                    height={300}
-                    className="object-contain"
-                  />
-                </div> */}
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Mobile-only image */}
+        <div className="lg:hidden mt-10 flex justify-center min-h-[300px]">
+          <div className="relative w-full max-w-[500px]">
+            <Image
+              src="/images/about-grid/Mainposter.png"
+              alt="Discover the perfect solution"
+              width={500}
+              height={320}
+              className="w-full h-auto object-contain"
+              loading="lazy"
+            />
           </div>
         </div>
       </div>
