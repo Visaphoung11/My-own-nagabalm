@@ -79,7 +79,7 @@ model Category {
 model Product {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   slug         String   @unique
-  image        String
+  images       String[]
   price        Float
   isTopSell    Boolean
   translations Json     // { en: { name, description }, km: { name, description } }

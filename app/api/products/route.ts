@@ -1,6 +1,7 @@
 // app/api/products/route.ts
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { uploadImage } from '@/lib/cloudinary';
 
 export async function GET(request: Request) {
   try {
@@ -45,69 +46,21 @@ count: products.length
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    
-
-const { slug, image, price, isTopSell, translations, categoryId } = body;
+    const { slug, images, price, isTopSell, translations, categoryId } = body;
 
     // Validate required fields
-    if (!slug || !image || price === undefined || isTopSell === undefined || !translations || !categoryId) {
+    if (!slug || !images || !Array.isArray(images) || price === undefined || isTopSell === undefined || !translations || !categoryId) {
       return NextResponse.json({
         success: false,
-        error: "Missing required fields: slug, image, price, isTopSell, translations, categoryId"
+        error: "Missing required fields: slug, images, price, isTopSell, translations, categoryId"
       }, { status: 400 });
-    }
-
-    // Validate translations object structure
-    if (typeof translations !== 'object' || translations === null) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "Translations must be an object"
-        },
-        { status: 400 }
-      );
-    }
-
-    // Validate that translations has required language keys
-    if (!translations.en || !translations.km) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "Translations must include both 'en' and 'km' language keys"
-        },
-        { status: 400 }
-      );
-    }
-
-    // Validate each language translation structure
-    for (const [lang, translation] of Object.entries(translations)) {
-      if (typeof translation !== 'object' || translation === null) {
-        return NextResponse.json(
-          {
-            success: false,
-            error: `Translation for '${lang}' must be an object`
-          },
-          { status: 400 }
-        );
-      }
-      
-      const trans = translation as any;
-      if (!trans.name || !trans.description) {
-        return NextResponse.json(
-          {
-            success: false,
-            error: `Translation for '${lang}' must have 'name' and 'description' fields`
-          },
-          { status: 400 }
-        );
-      }
     }
 
     // Save product to DB
     const product = await prisma.product.create({
       data: {
         slug,
-        image,
+        images, // Expecting an array of URLs from the client
         price: parseFloat(price),
         isTopSell: Boolean(isTopSell),
         translations,
@@ -124,7 +77,6 @@ const { slug, image, price, isTopSell, translations, categoryId } = body;
   } catch (error) {
     console.error('Error creating product:', error);
     
-    // Check if it's a database connection error
     if (error instanceof Error && error.message.includes('authentication failed')) {
       return NextResponse.json(
         { 
