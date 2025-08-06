@@ -56,14 +56,15 @@ datasource db {
 }
 
 model User {
-  id       String   @id @default(auto()) @map("_id") @db.ObjectId
-  email    String
-  name     String
-  password String
-  role     String
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  email        String    @unique
+  name         String
+  password     String
+  role         String
+  refreshToken String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 }
 
 model Category {
@@ -85,7 +86,7 @@ model Product {
   translations Json     // { en: { name, description }, km: { name, description } }
 
   categoryId   String   @db.ObjectId
-  category     Category @relation(fields: [categoryId], references: [id])
+  category     Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
