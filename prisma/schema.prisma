@@ -1,4 +1,50 @@
-// prisma/schema.prisma
+// // prisma/schema.prisma
+
+// generator client {
+//   provider = "prisma-client-js"
+// }
+
+// datasource db {
+//   provider = "mongodb"
+//   url      = env("DATABASE_URL")
+// }
+
+// type CategoryTranslations {
+//   lang String
+//   name String
+// }
+
+// type ProductTranslations {
+//   lang        String
+//   name        String
+//   description String
+// }
+
+// model User {
+//   id       String @id @default(auto()) @map("_id") @db.ObjectId
+//   email    String
+//   name     String
+//   password String
+//   role     String
+// }
+
+// model Category {
+// id String @id @default(auto()) @map("_id") @db.ObjectId
+// slug String
+// translations Json // { en: { name }, km: { name } }
+// products Product[] // relation
+// }
+
+// model Product {
+// id String @id @default(auto()) @map("_id") @db.ObjectId
+// slug String
+// image String
+// price Float
+// isTopSell Boolean
+// translations Json // new shape: { en: {...}, km: {...} }
+// categoryId String @db.ObjectId
+// category Category @relation(fields: [categoryId], references: [id])
+// }
 
 generator client {
   provider = "prisma-client-js"
@@ -9,36 +55,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-type CategoryTranslations {
-  lang String
-  name String
-}
-
-type ProductTranslations {
-  lang        String
-  name        String
-  description String
-}
-
 model User {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
   email    String
   name     String
   password String
   role     String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Category {
-  id           String                 @id @default(auto()) @map("_id") @db.ObjectId
-  slug         String
-  translations CategoryTranslations[]
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  slug         String     @unique
+  translations Json       // { en: { name }, km: { name } }
+  products     Product[]  // relation
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Product {
-  id           String                 @id @default(auto()) @map("_id") @db.ObjectId
-  slug         String
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug         String   @unique
   image        String
   price        Float
   isTopSell    Boolean
-  translations ProductTranslations[]
+  translations Json     // { en: { name, description }, km: { name, description } }
+
+  categoryId   String   @db.ObjectId
+  category     Category @relation(fields: [categoryId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

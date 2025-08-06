@@ -1,23 +1,23 @@
-// app/api/products/route.ts
+// app/api/categories/route.ts
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 export async function GET(request: Request) {
   try {
-    // Get all products
-    const products = await prisma.product.findMany({
+    // Get all categories
+    const categories = await prisma.category.findMany({
       orderBy: {
         createdAt: 'desc'
       }
     });
     
-   return NextResponse.json({
-success: true,
-data: products,
-count: products.length
-})
+    return NextResponse.json({
+      success: true,
+      data: categories,
+      count: categories.length
+    });
   } catch (error) {
-    console.error('Error fetching products:', error);
+    console.error('Error fetching categories:', error);
     
     // Check if it's a database connection error
     if (error instanceof Error && error.message.includes('authentication failed')) {
@@ -34,7 +34,7 @@ count: products.length
     return NextResponse.json(
       { 
         success: false,
-        error: "Failed to fetch products",
+        error: "Failed to fetch categories",
         details: error instanceof Error ? error.message : "Unknown error"
       },
       { status: 500 }
@@ -45,24 +45,22 @@ count: products.length
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    
-
-const { slug, image, price, isTopSell, translations, categoryId } = body;
+    const { slug, translations } = body;
 
     // Validate required fields
-    if (!slug || !image || price === undefined || isTopSell === undefined || !translations || !categoryId) {
-      return NextResponse.json({
-        success: false,
-        error: "Missing required fields: slug, image, price, isTopSell, translations, categoryId"
+    if (!slug || !translations) {
+      return NextResponse.json({ 
+        success: false, 
+        error: "Missing required fields: slug, translations" 
       }, { status: 400 });
     }
 
     // Validate translations object structure
     if (typeof translations !== 'object' || translations === null) {
       return NextResponse.json(
-        {
+        { 
           success: false,
-          error: "Translations must be an object"
+          error: "Translations must be an object" 
         },
         { status: 400 }
       );
@@ -71,9 +69,9 @@ const { slug, image, price, isTopSell, translations, categoryId } = body;
     // Validate that translations has required language keys
     if (!translations.en || !translations.km) {
       return NextResponse.json(
-        {
+        { 
           success: false,
-          error: "Translations must include both 'en' and 'km' language keys"
+          error: "Translations must include both 'en' and 'km' language keys" 
         },
         { status: 400 }
       );
@@ -83,46 +81,42 @@ const { slug, image, price, isTopSell, translations, categoryId } = body;
     for (const [lang, translation] of Object.entries(translations)) {
       if (typeof translation !== 'object' || translation === null) {
         return NextResponse.json(
-          {
+          { 
             success: false,
-            error: `Translation for '${lang}' must be an object`
+            error: `Translation for '${lang}' must be an object` 
           },
           { status: 400 }
         );
       }
       
       const trans = translation as any;
-      if (!trans.name || !trans.description) {
+      if (!trans.name) {
         return NextResponse.json(
-          {
+          { 
             success: false,
-            error: `Translation for '${lang}' must have 'name' and 'description' fields`
+            error: `Translation for '${lang}' must have 'name' field` 
           },
           { status: 400 }
         );
       }
     }
 
-    // Save product to DB
-    const product = await prisma.product.create({
+    // Save category to DB
+    const category = await prisma.category.create({
       data: {
         slug,
-        image,
-        price: parseFloat(price),
-        isTopSell: Boolean(isTopSell),
-        translations,
-        categoryId
+        translations
       }
     });
 
     return NextResponse.json({ 
       success: true,
-      message: "Product created successfully",
-      data: product
+      message: "Category created successfully",
+      data: category
     }, { status: 201 });
     
   } catch (error) {
-    console.error('Error creating product:', error);
+    console.error('Error creating category:', error);
     
     // Check if it's a database connection error
     if (error instanceof Error && error.message.includes('authentication failed')) {
@@ -138,7 +132,7 @@ const { slug, image, price, isTopSell, translations, categoryId } = body;
     return NextResponse.json(
       { 
         success: false,
-        error: "Failed to create product",
+        error: "Failed to create category",
         details: error instanceof Error ? error.message : "Unknown error"
       },
       { status: 500 }
