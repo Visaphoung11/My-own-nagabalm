@@ -10,7 +10,8 @@ const Footer = () => {
     <footer className="bg-white w-full pt-6 sm:pt-8 md:pt-10 pb-8 relative overflow-hidden text-gray-700">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col lg:flex-row justify-between gap-12">
         {/* Background Logo - responsive */}
-        <div className="absolute right-[-15%] top-[1%] w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 xl:w-[500px] xl:h-[500px] 2xl:w-[600px] 2xl:h-[600px] opacity-50 pointer-events-none">
+        {/* Hides the image by default, and shows it only on large screens (1024px) and above. */}
+        <div className="hidden lg:block absolute right-[-15%] top-[1%] w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 xl:w-[500px] xl:h-[500px] 2xl:w-[600px] 2xl:h-[600px] opacity-50 pointer-events-none">
           <Image
             src="/images/Logo/Naga Balm__Brandmark_Fire.png"
             alt="Background Logo"
