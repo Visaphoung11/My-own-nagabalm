@@ -4,6 +4,10 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { FormEvent } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { loginSchema, LoginFormData } from './validation';
+import { z } from 'zod';
+import { setAuthTokens } from '@/lib/auth';
 
 // This is a React component for a login page using the Next.js framework.
 // It handles user authentication by sending an email and password to an API.
@@ -12,42 +16,65 @@ import { FormEvent } from 'react';
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [formErrors, setFormErrors] = useState<Partial<LoginFormData>>({});
+  const [apiError, setApiError] = useState('');
   const router = useRouter();
 
-  // Handles the form submission for logging in.
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-
-    try {
+  // Mutation for login
+  const loginMutation = useMutation({
+    mutationFn: async (credentials: LoginFormData) => {
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(credentials),
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        // Here, we save both the access and refresh tokens.
-        // The access token is used for subsequent API calls.
-        // The refresh token is used to get a new access token when the current one expires.
-        localStorage.setItem('accessToken', data.accessToken);
-        localStorage.setItem('refreshToken', data.refreshToken);
-        router.push('/dashboard');
-      } else {
-        setError(data.message || 'Login failed');
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Login failed');
       }
-    } catch (err) {
-      setError('An error occurred during login');
-      console.error(err);
-    } finally {
-      setLoading(false);
+
+      return response.json();
+    },
+    onSuccess: (data) => {
+      // Here, we save both the access and refresh tokens.
+      // The access token is used for subsequent API calls.
+      // The refresh token is used to get a new access token when the current one expires.
+      setAuthTokens(data.data.accessToken, data.data.refreshToken);
+      router.push('/dashboard');
+    },
+    onError: (error: Error) => {
+      setApiError(error.message || 'An error occurred during login');
+    },
+  });
+
+  // Handles the form submission for logging in.
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setApiError('');
+    setFormErrors({});
+
+    // Validate form data with Zod
+    try {
+      const formData = loginSchema.parse({ email, password });
+      
+      // If validation passes, proceed with login mutation
+      loginMutation.mutate(formData);
+    } catch (error) {
+      // Handle Zod validation errors
+      if (error instanceof z.ZodError) {
+        const errors: Partial<LoginFormData> = {};
+        error.issues.forEach((issue) => {
+          if (issue.path[0]) {
+            errors[issue.path[0] as keyof LoginFormData] = issue.message;
+          }
+        });
+        setFormErrors(errors);
+      } else {
+        setApiError('An unexpected error occurred');
+      }
     }
   };
 
@@ -58,9 +85,9 @@ const LoginPage = () => {
           Sign in to your account
         </h2>
 
-        {error && (
+        {(apiError || formErrors.email || formErrors.password) && (
           <div className="mb-4 text-sm text-red-700 bg-red-100 border border-red-300 rounded-md p-3">
-            {error}
+            {apiError || formErrors.email || formErrors.password}
           </div>
         )}
 
@@ -75,6 +102,9 @@ const LoginPage = () => {
               required
               className="w-full px-4 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-sm text-black focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
             />
+            {formErrors.email && (
+              <p className="mt-1 text-sm text-red-600">{formErrors.email}</p>
+            )}
           </div>
 
           <div>
@@ -87,6 +117,9 @@ const LoginPage = () => {
               required
               className="w-full px-4 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-sm text-black focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
             />
+            {formErrors.password && (
+              <p className="mt-1 text-sm text-red-600">{formErrors.password}</p>
+            )}
           </div>
 
           <div className="flex items-center justify-between text-sm text-gray-600">
@@ -101,12 +134,12 @@ const LoginPage = () => {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={loginMutation.isPending}
             className={`w-full py-2 px-4 rounded-md text-white bg-orange-600 hover:bg-orange-700 transition text-sm font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 ${
-              loading ? 'opacity-70 cursor-not-allowed' : ''
+              loginMutation.isPending ? 'opacity-70 cursor-not-allowed' : ''
             }`}
           >
-            {loading ? 'Signing in...' : 'Sign In'}
+            {loginMutation.isPending ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
       </div>

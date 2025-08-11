@@ -347,11 +347,11 @@
   },
   "faq": {
     "hero": {
-  "title": "ANY QUESTIONS?",
-  "subtitle": "We got you.",
-  "description": "Find answers to commonly asked questions about Naga Balm. Can't find what you're looking for? Feel free to ",
-  "contactUs": "contact us"
-},
+      "title": "ANY QUESTIONS?",
+      "subtitle": "We got you.",
+      "description": "Find answers to commonly asked questions about Naga Balm. Can't find what you're looking for? Feel free to ",
+      "contactUs": "contact us"
+    },
     "questions": [
       {
         "question": "What is Naga Balm?",
@@ -434,7 +434,7 @@
     },
     "form": {
       "title": "SEND US A MESSAGE",
-      "subtitle": "Reach out to us through any of these channels",
+      "subtitle": "Get in touch with us through any of these channels",
       "fields": {
         "fullName": "Full Name",
         "email": "Email",
@@ -446,10 +446,10 @@
     },
     "info": {
       "title": "HOW TO REACH US",
-      "subtitle": "Reach out to us through any of these channels",
+      "subtitle": "Get in touch with us through any of these channels",
       "address": {
         "title": "ADDRESS",
-        "text": "Naga Blam@ combines ancient Khmer healing tradition with modern innovation. Our premium"
+        "text": "Coco Khmer Co., Ltd. #1529, NR. 2, Chakangre Krom Khan Mean Chey, Phnom Penh Cambodia"
       },
       "email": {
         "title": "EMAIL"

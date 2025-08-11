@@ -4,13 +4,13 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/app/components/Sidebar';
 import Navbar from '@/app/components/Navbar';
+import { isAuthenticated } from '@/lib/auth';
 
 const Dashboard = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
+    if (!isAuthenticated()) {
       router.push('/login');
     }
   }, [router]);

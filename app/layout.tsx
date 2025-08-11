@@ -4,6 +4,7 @@ import "./globals.css";
 import { defaultMetadata } from './metadata'
 import {NextIntlClientProvider} from 'next-intl';
 import {getLocale, getMessages} from 'next-intl/server';
+import { QueryClientProviderWrapper } from '@/lib/queryClientProvider';
 
 // English primary font
 const karla = Karla({
@@ -69,9 +70,11 @@ export default async function RootLayout({
       <body
         className={`${karla.variable} ${hanuman.variable} antialiased ${locale === 'km' ? 'font-hanuman' : 'font-karla'}`}
       >
-        <NextIntlClientProvider messages={messages}>
-          {children}
-        </NextIntlClientProvider>
+        <QueryClientProviderWrapper>
+          <NextIntlClientProvider messages={messages}>
+            {children}
+          </NextIntlClientProvider>
+        </QueryClientProviderWrapper>
       </body>
     </html>
   );
