@@ -92,9 +92,9 @@
     "innovation": "Innovation",
     "innovationText": "Modern techniques, traditional wisdom",
     "hero": {
-      "title": "CAMBODIA'S\nTOPICAL PAIN RELIEF.",
+      "title": "CAMBODIA'S TOPICAL \nPAIN RELIEF.",
       "description": "Lovingly handcrafted at scale in Cambodia, Naga Balm is a line of all natural, effective, and safe pain relievers expertly formulated with International manufacturing standards to deliver a smooth, non-greasy, non-irritating sensation to you and your loved ones.",
-      "continueToStory": "Continue to Our Story ↓"
+      "continueToStory": "Continue to Our Story"
     },
     "ourStory": {
       "title": "OUR STORY",
@@ -348,10 +348,11 @@
   },
   "faq": {
     "hero": {
-      "title": "ANY QUESTIONS?",
-      "subtitle": "We got you.",
-      "description": "Find answers to commonly asked questions about Naga Balm. Can't find what you're looking for? Feel free to contact us."
-    },
+  "title": "ANY QUESTIONS?",
+  "subtitle": "We got you.",
+  "description": "Find answers to commonly asked questions about Naga Balm. Can't find what you're looking for? Feel free to ",
+  "contactUs": "contact us"
+},
     "questions": [
       {
         "question": "What is Naga Balm?",
@@ -414,20 +415,21 @@
       }
     ],
     "discoverSolution": {
-      "title": "DISCOVER THE PERFECT\nSOLUTION FOR YOUR NEEDS.",
-      "activeLifestyles": {
-        "title": "FOR ACTIVE LIFESTYLES",
-        "subtitle": "Push harder. Recover faster.\nStay in motion.",
-        "description": "Whether you're an athlete or just\nalways on the move find relief that keeps up.",
-        "viewProducts": "VIEW PRODUCTS"
-      },
-      "everydayRelief": {
-        "title": "FOR EVERYDAY RELIEF",
-        "subtitle": "Soothe tension. Ease the day.\nFeel good again.",
-        "description": "From desk strain to daily discomfort,\nchoose relief made for life's routines.",
-        "viewProducts": "VIEW PRODUCTS"
-      }
-    }
+  "title": "DISCOVER THE PERFECT\nSOLUTION FOR YOUR NEEDS.",
+  "activeLifestyles": {
+    "title": "FOR ACTIVE LIFESTYLES",
+    "subtitle": "Push harder. Recover faster. Stay in motion.",
+    "description": "Whether you're an athlete or just\nalways on the move, find relief that\n keeps up.",
+    "viewProducts": "VIEW PRODUCTS"
+  },
+  "everydayRelief": {
+    "title": "FOR EVERYDAY RELIEF",
+    "subtitle": "Soothe tension. Ease the day.\nFeel good again.",
+    "description": "From desk strain to daily\ndiscomfort, choose relief made\n for life's routines.",
+    "viewProducts": "VIEW PRODUCTS"
+  }
+}
+
   },
   "contact": {
     "hero": {
