@@ -206,6 +206,8 @@
       }
     },
     "grid": {
+      "title": "Browse Products",
+      "searchPlaceholder": "Search products...",
       "search": {
         "placeholder": "Search products...",
         "clear": "Clear search"
@@ -228,7 +230,8 @@
       },
       "actions": {
         "learnMore": "LEARN MORE",
-        "closeModal": "Close modal"
+        "closeModal": "Close modal",
+        "clear": "Clear"
       },
       "modal": {
         "activeIngredient": "ACTIVE INGREDIENT",

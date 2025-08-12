@@ -1,65 +1,69 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { FormEvent } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import { loginSchema, LoginFormData } from './validation';
-import { z } from 'zod';
-import { setAuthTokens } from '@/lib/auth';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
+import Link from "next/link";
+import { FormEvent } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { loginSchema, LoginFormData } from "./validation";
+import { z } from "zod";
+import { setAuthTokens } from "@/lib/auth";
 
 // This is a React component for a login page using the Next.js framework.
 // It handles user authentication by sending an email and password to an API.
 // Upon successful login, it saves both the access and refresh tokens
 // to local storage and redirects the user to the dashboard.
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [formErrors, setFormErrors] = useState<Partial<LoginFormData>>({});
-  const [apiError, setApiError] = useState('');
+  const [apiError, setApiError] = useState("");
   const router = useRouter();
+  const locale = useLocale();
 
   // Mutation for login
   const loginMutation = useMutation({
     mutationFn: async (credentials: LoginFormData) => {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(credentials),
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Login failed');
+        let errorMsg = "Login failed";
+        try {
+          const errorData = await response.json();
+          errorMsg = errorData.error || errorData.message || errorMsg;
+        } catch {}
+        throw new Error(errorMsg);
       }
 
       return response.json();
     },
-    onSuccess: (data) => {
-      // Here, we save both the access and refresh tokens.
-      // The access token is used for subsequent API calls.
-      // The refresh token is used to get a new access token when the current one expires.
-      setAuthTokens(data.data.accessToken, data.data.refreshToken);
-      router.push('/dashboard');
+    onSuccess: () => {
+      // Force a full reload to ensure middleware sees the new cookie immediately
+      window.location.assign(`/${locale}/dashboard`);
     },
     onError: (error: Error) => {
-      setApiError(error.message || 'An error occurred during login');
+      setApiError(error.message || "An error occurred during login");
     },
   });
 
   // Handles the form submission for logging in.
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setApiError('');
+    setApiError("");
     setFormErrors({});
 
     // Validate form data with Zod
     try {
       const formData = loginSchema.parse({ email, password });
-      
+
       // If validation passes, proceed with login mutation
       loginMutation.mutate(formData);
     } catch (error) {
@@ -73,7 +77,7 @@ const LoginPage = () => {
         });
         setFormErrors(errors);
       } else {
-        setApiError('An unexpected error occurred');
+        setApiError("An unexpected error occurred");
       }
     }
   };
@@ -124,10 +128,16 @@ const LoginPage = () => {
 
           <div className="flex items-center justify-between text-sm text-gray-600">
             <label className="flex items-center space-x-2">
-              <input type="checkbox" className="text-orange-600 rounded focus:ring-orange-500" />
+              <input
+                type="checkbox"
+                className="text-orange-600 rounded focus:ring-orange-500"
+              />
               <span className="ml-2">Remember me</span>
             </label>
-            <Link href="/forgot-password" className="text-orange-600 hover:underline">
+            <Link
+              href="/forgot-password"
+              className="text-orange-600 hover:underline"
+            >
               Forgot password?
             </Link>
           </div>
@@ -136,10 +146,10 @@ const LoginPage = () => {
             type="submit"
             disabled={loginMutation.isPending}
             className={`w-full py-2 px-4 rounded-md text-white bg-orange-600 hover:bg-orange-700 transition text-sm font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 ${
-              loginMutation.isPending ? 'opacity-70 cursor-not-allowed' : ''
+              loginMutation.isPending ? "opacity-70 cursor-not-allowed" : ""
             }`}
           >
-            {loginMutation.isPending ? 'Signing in...' : 'Sign In'}
+            {loginMutation.isPending ? "Signing in..." : "Sign In"}
           </button>
         </form>
       </div>
