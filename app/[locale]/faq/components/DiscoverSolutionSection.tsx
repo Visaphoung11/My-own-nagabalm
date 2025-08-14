@@ -38,12 +38,12 @@ const DiscoverSolutionSection = () => {
                   {index === 0 && <br />}
                 </React.Fragment>
               ))}
-              {t('activeLifestyles.description').split('\n').map((line, index) => (
+              {/* {t('activeLifestyles.description').split('\n').map((line, index) => (
                 <React.Fragment key={index}>
                   {line}
                   {index === 0 && <br />}
                 </React.Fragment>
-              ))}
+              ))} */}
             </p>
             <div className="absolute bottom-4 right-4 z-10">
               <button 
@@ -71,7 +71,7 @@ const DiscoverSolutionSection = () => {
           {t('everydayRelief.title')}
         </h2>
         <p className="text-sm sm:text-base opacity-90 leading-relaxed mb-4">
-          {[t('everydayRelief.subtitle'), t('everydayRelief.description')].map(text =>
+          {[t('everydayRelief.subtitle'),].map(text =>
             text.split('\n').map((line, idx) => (
               <React.Fragment key={idx}>
                 {line}
