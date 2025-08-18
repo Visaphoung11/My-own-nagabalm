@@ -188,7 +188,8 @@
     "preview": {
       "categories": {
         "active": "Active Lifestyles",
-        "everyday": "Everyday Relief"
+        "everyday": "Everyday Relief",
+        "balms": "Balms"
       },
       "navigation": {
         "backToProducts": "← Back to Products",
@@ -417,19 +418,18 @@
       }
     ],
     "discoverSolution": {
-  "title": "DISCOVER THE PERFECT\nSOLUTION FOR YOUR NEEDS.",
-  "activeLifestyles": {
-    "title": "FOR ACTIVE LIFESTYLES",
-    "subtitle": "Perform, recover, and stay in motion. Whether you're an athlete, fitness enthusiast,or someone  who loves staying active",
-    "viewProducts": "VIEW PRODUCTS"
-  },
-  "everydayRelief": {
-    "title": "FOR EVERYDAY RELIEF",
-    "subtitle": "Perform, recover, and stay in motion. Whether you're an athlete, fitness enthusiast,or someone who loves staying active",
-    "viewProducts": "VIEW PRODUCTS"
-  }
-}
-
+      "title": "DISCOVER THE PERFECT\nSOLUTION FOR YOUR NEEDS.",
+      "activeLifestyles": {
+        "title": "FOR ACTIVE LIFESTYLES",
+        "subtitle": "Perform, recover, and stay in motion. Whether you're an athlete, fitness enthusiast,or someone  who loves staying active",
+        "viewProducts": "VIEW PRODUCTS"
+      },
+      "everydayRelief": {
+        "title": "FOR EVERYDAY RELIEF",
+        "subtitle": "Perform, recover, and stay in motion. Whether you're an athlete, fitness enthusiast,or someone who loves staying active",
+        "viewProducts": "VIEW PRODUCTS"
+      }
+    }
   },
   "contact": {
     "hero": {
