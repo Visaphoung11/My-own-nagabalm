@@ -48,18 +48,18 @@ const emptyProduct = (): Omit<Product, "id"> => ({
   categoryId: "",
 });
 
-// Helper chips input component
-const ChipsInput: React.FC<{
+// Helper chips input component with multi-line support
+const MultiLineChipsInput: React.FC<{
   value: string[];
   onChange: (val: string[]) => void;
   placeholder?: string;
 }> = ({ value, onChange, placeholder }) => {
   const [input, setInput] = useState("");
 
-  const addChip = useCallback(() => {
-    const val = input.trim();
-    if (!val) return;
-    onChange([...(value || []), val]);
+  const addChips = useCallback(() => {
+    const lines = input.split("\n").map(line => line.trim()).filter(line => line);
+    if (lines.length === 0) return;
+    onChange([...(value || []), ...lines]);
     setInput("");
   }, [input, onChange, value]);
 
@@ -67,6 +67,14 @@ const ChipsInput: React.FC<{
     (i: number) => onChange(value.filter((_, idx) => idx !== i)),
     [onChange, value]
   );
+
+  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    // Allow Ctrl+Enter or Cmd+Enter to add chips
+    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+      e.preventDefault();
+      addChips();
+    }
+  }, [addChips]);
 
   return (
     <div>
@@ -81,21 +89,32 @@ const ChipsInput: React.FC<{
         ))}
       </div>
       <div className="flex gap-2">
-        <input
-          className="flex-1 border border-gray-300 rounded px-2 py-2"
+        <textarea
+          className="flex-1 border border-gray-300 rounded px-2 py-2 min-h-20"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder={placeholder || "Add item and press +"}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              addChip();
-            }
-          }}
+          placeholder={placeholder || "Enter items (one per line). Press Ctrl+Enter to add."}
+          onKeyDown={handleKeyDown}
         />
-        <button type="button" className="px-3 py-2 bg-gray-200 rounded" onClick={addChip}>
-          +
-        </button>
+        <div className="flex flex-col gap-1">
+          <button
+            type="button"
+            className="px-3 py-2 bg-gray-200 rounded whitespace-nowrap"
+            onClick={addChips}
+          >
+            Add
+          </button>
+          <button
+            type="button"
+            className="px-3 py-2 bg-gray-100 rounded text-xs"
+            onClick={() => setInput("")}
+          >
+            Clear
+          </button>
+        </div>
+      </div>
+      <div className="text-xs text-gray-500 mt-1">
+        Enter multiple items (one per line). Press Ctrl+Enter or click "Add" to add them all.
       </div>
     </div>
   );
@@ -370,17 +389,17 @@ const DashboardProductsManager: React.FC = () => {
                   />
 
                   <label className="block text-sm mb-1">Usage (bullets)</label>
-                  <ChipsInput
+                  <MultiLineChipsInput
                     value={form.translations[lng].usage || []}
                     onChange={(arr) => setForm({ ...form, translations: { ...form.translations, [lng]: { ...form.translations[lng], usage: arr } } })}
-                    placeholder="Add usage item"
+                    placeholder="Enter usage instructions (one per line)"
                   />
 
                   <label className="block text-sm mb-1 mt-3">Best For Tags</label>
-                  <ChipsInput
+                  <MultiLineChipsInput
                     value={form.translations[lng].bestForTags || []}
                     onChange={(arr) => setForm({ ...form, translations: { ...form.translations, [lng]: { ...form.translations[lng], bestForTags: arr } } })}
-                    placeholder="Add tag"
+                    placeholder="Enter tags (one per line)"
                   />
                 </div>
               ))}

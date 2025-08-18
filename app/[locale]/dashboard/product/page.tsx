@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useMemo, useState } from "react";
@@ -225,6 +226,7 @@ export default function ProductDashboardPage() {
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold text-gray-800">Products</h1>
           <button
+            type="button"
             onClick={openCreate}
             className="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600"
           >
@@ -241,71 +243,103 @@ export default function ProductDashboardPage() {
           />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {(loadingProducts ? Array.from({ length: 6 }) : filteredProducts).map(
-            (p, idx) => (
-              <div
-                key={(p as any)?.id ?? idx}
-                className="bg-white rounded-lg shadow p-4"
-              >
-                {p ? (
-                  <>
-                    <div className="flex items-center justify-between mb-2">
-                      <h2
-                        className="text-lg font-semibold text-gray-800 truncate"
-                        title={(p as ApiProduct).slug}
-                      >
-                        {(p as ApiProduct).slug}
-                      </h2>
-                      <span className="text-sm text-gray-500">
+        {/* === Products Table === */}
+        <div className="overflow-x-auto bg-white rounded-lg shadow">
+          <table className="min-w-full border border-gray-200">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700 border-b">
+                  Product Name
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700 border-b">
+                  Price
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700 border-b">
+                  Images
+                </th>
+                {/* <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700 border-b">
+                  Category
+                </th> */}
+                <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700 border-b">
+                  Status
+                </th>
+                <th className="px-4 py-2 text-sm font-semibold text-gray-700 border-b text-right">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {(loadingProducts ? Array.from({ length: 6 }) : filteredProducts).map(
+                (p, idx) =>
+                  p ? (
+                    <tr key={(p as ApiProduct).id ?? idx} className="hover:bg-gray-50">
+                      <td className="px-4 py-2 text-sm text-gray-800">
+                        {(p as ApiProduct).translations.en.name}
+                      </td>
+                      <td className="px-4 py-2 text-sm text-gray-600">
                         ${(p as ApiProduct).price.toFixed(2)}
-                      </span>
-                    </div>
-                    <div className="flex gap-2 overflow-x-auto mb-3">
-                      {(p as ApiProduct).images?.slice(0, 3).map((img) => (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          key={img}
-                          src={img}
-                          alt="img"
-                          className="h-14 w-14 object-cover rounded"
-                        />
-                      ))}
-                    </div>
-                    <div className="flex items-center gap-2 text-xs text-gray-600 mb-3">
-                      <span className="px-2 py-0.5 rounded bg-gray-100">
-                        {(p as ApiProduct).isTopSell ? "Top" : "Regular"}
-                      </span>
-                      <span className="px-2 py-0.5 rounded bg-gray-100">
-                        {(p as ApiProduct).categoryId.slice(-6)}
-                      </span>
-                    </div>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => openEdit(p as ApiProduct)}
-                        className="px-3 py-1.5 text-sm rounded border border-gray-300 hover:bg-gray-50"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => {
-                          if (confirm("Delete this product?"))
-                            deleteMutation.mutate((p as ApiProduct).id);
-                        }}
-                        className="px-3 py-1.5 text-sm rounded border border-red-300 text-red-600 hover:bg-red-50"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </>
-                ) : (
-                  <div className="animate-pulse h-40 bg-gray-100 rounded" />
-                )}
-              </div>
-            )
-          )}
+                      </td>
+                      <td className="px-4 py-2">
+                        <div className="flex gap-2">
+                          {(p as ApiProduct).images?.slice(0, 3).map((img) => (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              key={img}
+                              src={img}
+                              alt="img"
+                              className="h-10 w-10 object-cover rounded"
+                            />
+                          ))}
+                        </div>
+                      </td>
+                      {/* <td className="px-4 py-2 text-sm text-gray-600"> */}
+                        {/* Show last 6 chars as before; or show category name if available */}
+                        {/* {(p as ApiProduct).categoryId.slice(-6)} */}
+                      {/* </td> */}
+                      <td className="px-4 py-2">
+                        <span
+                          className={`px-2 py-1 rounded text-xs ${
+                            (p as ApiProduct).isTopSell
+                              ? "bg-green-100 text-green-700"
+                              : "bg-gray-100 text-gray-700"
+                          }`}
+                        >
+                          {(p as ApiProduct).isTopSell ? "Top" : "Regular"}
+                        </span>
+                      </td>
+                      <td className="px-4 py-2 text-right">
+                        <button
+                          type="button"
+                          onClick={() => openEdit(p as ApiProduct)}
+                          className="px-3 py-1 text-sm rounded border border-gray-300 hover:bg-gray-50 mr-2"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (confirm("Delete this product?"))
+                              deleteMutation.mutate((p as ApiProduct).id);
+                          }}
+                          className="px-3 py-1 text-sm rounded border border-red-300 text-red-600 hover:bg-red-50"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ) : (
+                    <tr key={idx}>
+                      <td colSpan={6} className="px-4 py-6">
+                        <div className="animate-pulse h-6 bg-gray-100 rounded" />
+                      </td>
+                    </tr>
+                  )
+              )}
+            </tbody>
+          </table>
         </div>
 
+        {/* === Product Form Modal === */}
         {formOpen && (
           <div
             className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
@@ -320,6 +354,7 @@ export default function ProductDashboardPage() {
                   {editingId ? "Edit Product" : "Create Product"}
                 </h2>
                 <button
+                  type="button"
                   onClick={() => setFormOpen(false)}
                   className="text-gray-500 hover:text-gray-700"
                 >
@@ -330,10 +365,7 @@ export default function ProductDashboardPage() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label
-                      htmlFor="slug"
-                      className="block text-sm font-medium mb-1"
-                    >
+                    <label htmlFor="slug" className="block text-sm font-medium mb-1">
                       Slug
                     </label>
                     <input
@@ -341,9 +373,7 @@ export default function ProductDashboardPage() {
                       required
                       placeholder="unique-product-slug"
                       value={form.slug}
-                      onChange={(e) =>
-                        setForm({ ...form, slug: e.target.value })
-                      }
+                      onChange={(e) => setForm({ ...form, slug: e.target.value })}
                       className="w-full border rounded-md px-3 py-2"
                     />
                   </div>
@@ -358,9 +388,7 @@ export default function ProductDashboardPage() {
                       id="categoryId"
                       required
                       value={form.categoryId}
-                      onChange={(e) =>
-                        setForm({ ...form, categoryId: e.target.value })
-                      }
+                      onChange={(e) => setForm({ ...form, categoryId: e.target.value })}
                       className="w-full border rounded-md px-3 py-2"
                     >
                       <option value="" disabled>
@@ -374,10 +402,7 @@ export default function ProductDashboardPage() {
                     </select>
                   </div>
                   <div>
-                    <label
-                      htmlFor="price"
-                      className="block text-sm font-medium mb-1"
-                    >
+                    <label htmlFor="price" className="block text-sm font-medium mb-1">
                       Price
                     </label>
                     <input
@@ -387,9 +412,7 @@ export default function ProductDashboardPage() {
                       required
                       placeholder="0.00"
                       value={form.price}
-                      onChange={(e) =>
-                        setForm({ ...form, price: e.target.value })
-                      }
+                      onChange={(e) => setForm({ ...form, price: e.target.value })}
                       className="w-full border rounded-md px-3 py-2"
                     />
                   </div>
@@ -409,28 +432,29 @@ export default function ProductDashboardPage() {
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="images"
-                    className="block text-sm font-medium mb-1"
-                  >
-                    Images
-                  </label>
-                  <input
-                    id="images"
-                    type="file"
-                    multiple
-                    accept="image/*"
-                    onChange={(e) => handleUpload(e.target.files)}
-                  />
+                  <label className="relative inline-block cursor-pointer">Images
+                      <img
+    className="h-20 w-20 object-cover rounded-lg"
+    src="https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg"
+    alt="default-image"
+  />
+  <input
+    id="images"
+    type="file"
+    multiple
+    accept="image/*"
+    className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+    onChange={(e) => handleUpload(e.target.files)}
+  />
+</label>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Upload product images (max 5). Click to select files.
+                    </p>
                   <div className="flex flex-wrap gap-2 mt-2">
                     {form.images.map((url) => (
                       <div key={url} className="relative">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={url}
-                          alt=""
-                          className="h-16 w-16 object-cover rounded"
-                        />
+                        <img src={url} alt="" className="h-16 w-16 object-cover rounded" />
                         <button
                           type="button"
                           onClick={() => removeImage(url)}
@@ -489,11 +513,7 @@ export default function ProductDashboardPage() {
                         </label>
                         <input
                           id={`size-${lang}`}
-                          placeholder={
-                            lang === "en"
-                              ? "e.g., 7g / 80g"
-                              : "ឧ. ៧ក្រាម / ៨០ក្រាម"
-                          }
+                          placeholder={lang === "en" ? "e.g., 7g / 80g" : "ឧ. ៧ក្រាម / ៨០ក្រាម"}
                           value={form.translations[lang].size}
                           onChange={(e) =>
                             setForm({
@@ -520,11 +540,7 @@ export default function ProductDashboardPage() {
                         <textarea
                           id={`description-${lang}`}
                           required
-                          placeholder={
-                            lang === "en"
-                              ? "Describe the product"
-                              : "ពិពណ៌នា​ពី​ផលិតផល"
-                          }
+                          placeholder={lang === "en" ? "Describe the product" : "ពិពណ៌នា​ពី​ផលិតផល"}
                           value={form.translations[lang].description}
                           onChange={(e) =>
                             setForm({
@@ -548,28 +564,27 @@ export default function ProductDashboardPage() {
                         >
                           Active Ingredient
                         </label>
-                        <input
-                          id={`activeIngredient-${lang}`}
-                          placeholder={
-                            lang === "en"
-                              ? "e.g., Wintergreen Oil"
-                              : "ឧ. ប្រេង Wintergreen"
-                          }
-                          value={form.translations[lang].activeIngredient}
-                          onChange={(e) =>
-                            setForm({
-                              ...form,
-                              translations: {
-                                ...form.translations,
-                                [lang]: {
-                                  ...form.translations[lang],
-                                  activeIngredient: e.target.value,
-                                },
-                              },
-                            })
-                          }
-                          className="w-full border rounded-md px-3 py-2"
-                        />
+                        <textarea
+  id={`activeIngredient-${lang}`}
+  placeholder={lang === "en" ? "e.g., Wintergreen Oil" : "ឧ. ប្រេង Wintergreen"}
+  value={form.translations[lang].activeIngredient}
+  onChange={(e) =>
+    setForm({
+      ...form,
+      translations: {
+        ...form.translations,
+        [lang]: {
+          ...form.translations[lang],
+          activeIngredient: e.target.value,
+        },
+      },
+    })
+  }
+  className="w-full border rounded-md px-3 py-2 resize-none"
+  rows={3} // you can adjust initial height
+/>
+
+                   
                       </div>
                       <div className="md:col-span-2">
                         <label
@@ -580,11 +595,7 @@ export default function ProductDashboardPage() {
                         </label>
                         <textarea
                           id={`usage-${lang}`}
-                          placeholder={
-                            lang === "en"
-                              ? "One point per line"
-                              : "មួយចំណុចក្នុងមួយបន្ទាត់"
-                          }
+                          placeholder={lang === "en" ? "One point per line" : "មួយចំណុចក្នុងមួយបន្ទាត់"}
                           value={form.translations[lang].usage.join("\n")}
                           onChange={(e) =>
                             setForm({
@@ -593,9 +604,7 @@ export default function ProductDashboardPage() {
                                 ...form.translations,
                                 [lang]: {
                                   ...form.translations[lang],
-                                  usage: e.target.value
-                                    .split("\n")
-                                    .filter(Boolean),
+                                  usage: e.target.value.split("\n").filter(Boolean),
                                 },
                               },
                             })
@@ -612,11 +621,7 @@ export default function ProductDashboardPage() {
                         </label>
                         <input
                           id={`bestFor-${lang}`}
-                          placeholder={
-                            lang === "en"
-                              ? "tag1, tag2, tag3"
-                              : "ស្លាក១, ស្លាក២, ស្លាក៣"
-                          }
+                          placeholder={lang === "en" ? "tag1, tag2, tag3" : "ស្លាក១, ស្លាក២, ស្លាក៣"}
                           value={form.translations[lang].bestForTags.join(", ")}
                           onChange={(e) =>
                             setForm({
