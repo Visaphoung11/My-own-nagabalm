@@ -47,10 +47,10 @@ const categoryStyles: Record<string, { bg: string; text: string }> = {
   balms: { bg: "bg-[#00B388]", text: "text-white" },
 };
 
-const categoryTitles: Record<string, string> = {
-  active: "",
-  everyday: "",
-};
+// const categoryTitles: Record<string, string> = {
+//   active: "",
+//   balms: "",
+// };
 
 // Local image fallback (if needed)
 const fallbackImage = "/images/placeholder.png";

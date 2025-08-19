@@ -156,7 +156,7 @@ const ProductsHeroSection = () => {
               {/* CTA Button */}
               <div className="relative z-20 flex justify-start">
                 <button
-                  onClick={() => router.push("/products/preview/everyday")}
+                  onClick={() => router.push("/products/preview/balms")}
                   className="bg-white text-[#00B388] font-bold py-3 sm:py-4 px-6 sm:px-8 md:px-10 rounded-full text-sm sm:text-base md:text-lg 
                     shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95 transition-all duration-300 
                     flex items-center gap-2 group-hover:bg-[#FFE6B0] border-2 border-transparent hover:border-white/20"

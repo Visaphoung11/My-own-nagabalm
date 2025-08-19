@@ -7,8 +7,8 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
-
+    // const id = params.id;// this is the old synchronous way of getting the id from params
+const id = (await params).id;
     // Get category by ID
     // const category = await prisma.category.findUnique({
     //   where: {
